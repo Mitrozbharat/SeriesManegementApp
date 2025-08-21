@@ -16,8 +16,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SeriesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ISeriesServices, SeriesService>();
-builder.Services.AddScoped<ISeriesRepo,SeriesRepository>();
+
+builder.Services.AddScoped<ILoginRepo, LoginRepository>();
+builder.Services.AddScoped<ISeriesRepo, SeriesRepository>();
+
+
+
 
 builder.Services.AddCors(options =>
 {

@@ -17,8 +17,8 @@ namespace SeriesApp.BLL.Interfaces
         Task<IEnumerable<tbl_Series>> SearchByAsync(int? seriesId, string? seriesType, string? seriesName, DateTime? startFrom, DateTime? endTo, string? sortBy);
 
         Task<bool> DeleteAsync(int id);
-
-
         List<SeriesReport> GetSeriesReport(int[] years);
+
+
     }
 }

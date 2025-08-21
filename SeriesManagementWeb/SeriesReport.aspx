@@ -8,7 +8,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Series Report</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,6 +43,11 @@
     </style>
 </head>
 <body>
+    <div class="my-3">
+      <a  href="ManageSeries"  class="btn btn-danger">Back</a>   
+
+    </div>
+
     <h2>Series Report</h2>
 
   <label>Select Years:</label>
@@ -61,35 +65,25 @@
     <button type="button" id="btnClear">Clear</button>
 
     <div id="reportContainer"></div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+
+        $(document).ready(function () {
+            $(document).ready(function () {
+                // Trigger button click automatically on page load
+                $("#btnLoad").trigger("click");
+
+                $(".year-checkbox").change(function () {
+                    $("#btnLoad").trigger("click");
+                });
+            });
+
+        });
+
         $(document).ready(function () {
             
-                //$('#btnLoad').click(function () {
-                //    var selectedYears = $('#ddlYears').val();
-                //    if (!selectedYears || selectedYears.length === 0) {
-                //        $('#reportContainer').html('<p style="color:red;">Please select at least one year.</p>');
-                //        return;
-                //    }
-
-                //    $.ajax({
-                //        url: 'https://localhost:7019/api/Series/GetSeriesReport',
-                //        type: 'GET',
-                //        data: { years: selectedYears },
-                //        traditional: true,
-                //        success: function (data) {
-                //            renderTable(data, selectedYears);
-                //            console.log(data);
-                //        },
-                //        error: function (xhr) {
-                //            $('#reportContainer').html('<p style="color:red;">Error: ' + xhr.responseText + '</p>');
-                //        }
-                //    });
-            //});
-
-
-
-
+            
             $('#btnLoad').click(function () {
                 var selectedYears = $('.year-checkbox:checked').map(function () {
                     return this.value;
@@ -98,7 +92,9 @@
                 if (!selectedYears || selectedYears.length === 0) {
                     $('#reportContainer').html('<p style="color:red;">Please select at least one year.</p>');
                     return;
-                }
+
+               }
+
 
                 $.ajax({
                     url: 'https://localhost:7019/api/Series/GetSeriesReport',
@@ -114,6 +110,7 @@
                     }
                 });
             });
+
 
             // Clear Selection
             $('#btnClear').click(function () {

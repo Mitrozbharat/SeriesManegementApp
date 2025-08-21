@@ -58,5 +58,6 @@ namespace SeriesApp.BLL.Services
         {
             return _repo.GetSeriesReport(years);
         }
+        
     }
 }

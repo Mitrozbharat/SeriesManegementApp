@@ -41,7 +41,14 @@
         <div class="container">
             <!-- Search Panel -->
             <div class="search-panel">
-                <h4>Search Series</h4>
+               <div class="row">
+                  <div class="col-6">
+                        <h4>Search Series</h4>
+                  </div>
+                     <div class="col-6 d-flex justify-content-end ">
+        <a href="SeriesReport" class="btn btn-outline-primary m-1">Report</a>
+  </div>
+               </div>
                 <div class="form-row">
                     <div class="row">
                         <div class="form-group col-md-4">
@@ -95,8 +102,14 @@
                         <asp:Button ID="btnAddSeries" runat="server" Text="Add Series" CssClass="btn btn-primary" OnClientClick="window.location.href='AddSeries.aspx?Mode=A'; return false;" />
                         <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-success" OnClientClick="searchSeries(); return false;" />
                         <asp:Button ID="btnRefresh" runat="server" Text="Refresh" CssClass="btn btn-secondary" OnClientClick="resetForm(); return false;" />
-                        <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-danger" OnClientClick="resetForm(); return false;" />
+                        <asp:HyperLink
+                            ID="btnCancel"
+                            runat="server"
+                            NavigateUrl="~/Default.aspx"
+                            CssClass="btn btn-danger">Cancel
+                        </asp:HyperLink>
                     </div>
+
                 </div>
                 <div id="errorMessage" class="error-message"></div>
             </div>
@@ -117,7 +130,7 @@
                     <tbody></tbody>
                 </table>
 
-              
+
             </div>
         </div>
     </form>
@@ -133,7 +146,7 @@
                 this.value = this.value.replace(/[^0-9]/g, '');
             });
 
-           
+
 
             // Initialize DataTable
             var table = $('#seriesTable').DataTable({

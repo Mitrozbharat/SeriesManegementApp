@@ -9,11 +9,11 @@
                     <div class="form-row">
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="form-label">Series Name</label>
+                                <label class="form-label">Series Name <span class="text-danger" style="color:red">*</span></label>
                                 <input type="text" class="form-control" id="SeriesName" maxlength="250" required />
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label">Series Type</label>
+                                <label class="form-label">Series Type <span class="text-danger" style="color:red">*</span></label>
                                 <select class="form-select" id="SeriesTypeId" required>
                                     <option value="">-- Select --</option>
                                     <option value="1">International</option>
@@ -23,7 +23,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label">Series Status</label>
+                                <label class="form-label">Series Status <span class="text-danger" style="color:red">*</span></label>
                                 <select class="form-select" id="SeriesStatusId" required>
                                     <option value="">-- Select --</option>
                                     <option value="1">Scheduled</option>
@@ -38,7 +38,7 @@
                     <div class="form-row">
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="form-label">Match Status</label>
+                                <label class="form-label">Match Status <span class="text-danger" style="color:red">*</span></label>
                                 <select class="form-select" id="MatchStatusId" required>
                                     <option value="">-- Select --</option>
                                     <option value="1">Scheduled</option>
@@ -48,7 +48,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label">Match Format</label>
+                                <label class="form-label">Match Format </label>
                                 <select class="form-select" id="MatchFormatId">
                                     <option value="">-- Select --</option>
                                     <option value="1">ODI</option>
@@ -75,7 +75,7 @@
                     <div class="form-row">
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="form-label">Gender</label>
+                                <label class="form-label">Gender <span class="text-danger" style="color:red">*</span></label>
                                 <select class="form-select" id="GenderId" required>
                                     <option value="">-- Select --</option>
                                     <option value="1">Mens</option>
@@ -84,7 +84,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label">Trophy Type</label>
+                                <label class="form-label">Trophy Type <span class="text-danger" style="color:red">*</span></label>
                                 <select class="form-select" id="TrophyTypeId" required>
                                     <option value="">-- Select --</option>
                                     <option value="1">Asia Cup</option>
@@ -92,7 +92,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label">Year</label>
+                                <label class="form-label">Year <span class="text-danger" style="color:red">*</span></label>
                                 <input type="text" class="form-control" id="Year" maxlength="4" required />
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                                 <input type="date" class="form-control" id="SeriesEndDate" required />
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="form-label">Is Active</label>
+                                <label class="form-label">Is Active <span class="text-danger" style="color:red">*</span></label>
                                 <select class="form-select" id="IsActive" required>
                                     <option value="">-- Select --</option>
                                     <option value="1">Yes</option>
@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label">Description</label>
+                        <label class="form-label">Description </label>
                         <textarea class="form-control" id="Description" maxlength="500"></textarea>
                     </div>
 
@@ -128,7 +128,7 @@
                     <div class="d-flex justify-content-center gap-2 mt-4">
                         <button type="button" class="btn btn-success" onclick="saveSeries()">Save</button>
                         <button type="reset" class="btn btn-secondary">Refresh</button>
-                        <button type="button" class="btn btn-danger">Cancel</button>
+                         <a  href="ManageSeries"  class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>
@@ -166,7 +166,7 @@
                     },
                     error: function (err) {
                         console.error(err);
-                        alert("Error: " + (err.responseText || err.statusText));
+                        alert("Error: " + "all Feild Requied  ");
                     }
                 });
             }

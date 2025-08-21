@@ -9,6 +9,11 @@
 
     <body class="bg-light">
         <div class="container mt-5">
+
+            <div class="my-3">
+    <a href="ManageSeries" class="btn btn-outline-danger m-1">Back</a>
+ </div>
+
             <div class="card shadow-lg p-4 mx-auto" style="max-width: 900px;">
                 <h3 id="pageTitle" class="mb-4 text-center">Add Series</h3>
 
