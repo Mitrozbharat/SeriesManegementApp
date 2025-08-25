@@ -2,12 +2,9 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SeriesReport.aspx.cs" Inherits="SeriesManagementWeb.SeriesReport" MasterPageFile="~/Site.Master" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Series Report</title>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/WebForms/multiselect-dropdown.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,33 +38,59 @@
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
+
+<div>
     <div class="my-3">
       <a  href="ManageSeries"  class="btn btn-danger">Back</a>   
-
     </div>
 
     <h2>Series Report</h2>
 
   <label>Select Years:</label>
-        <div class="year-checkboxes">
+
+   
+<%--   <select style="width:200px" id="yearDropdown" multiple placeholder="Choose fruits" multiselect-search="true" multiselect-select-all="true">--%>
+ 
+    <div class="year-checkboxes">
             <label><input type="checkbox" class="year-checkbox" value="2019"> 2019</label>
             <label><input type="checkbox" class="year-checkbox" value="2020"> 2020</label>
             <label><input type="checkbox" class="year-checkbox" value="2021"> 2021</label>
             <label><input type="checkbox" class="year-checkbox" value="2022"> 2022</label>
             <label><input type="checkbox" class="year-checkbox" value="2023"> 2023</label>
             <label><input type="checkbox" class="year-checkbox" value="2024"> 2024</label>
-             <label><input type="checkbox" class="year-checkbox" checked value="2025" /> 2025 </label>
-        </div>
+            <label><input type="checkbox" class="year-checkbox" checked value="2025" /> 2025 </label>
+     </div>
 
-    <button type="button" id="btnLoad">Load Report</button>
+    <button type="button" id="btnLoad" style="display:none">Load Report</button>
     <button type="button" id="btnClear">Clear</button>
 
+
+
     <div id="reportContainer"></div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+
+
+
 
     <script>
+
+        //const select = document.getElementById("yearDropdown");
+        //const currentYear = new Date().getFullYear();
+
+        //console.log('Yers: ',select.options.length);
+
+        //for (let year = 2000; year <= 2050; year++) {
+
+        //    let option = document.createElement("option");
+        //    option.value = year;
+        //    option.text = year;
+
+        //    if (year === currentYear) {
+        //        option.selected = true; // Automatically select current year
+        //    }
+
+        //    select.appendChild(option);
+        //}
 
         $(document).ready(function () {
             $(document).ready(function () {
@@ -79,12 +102,16 @@
                 });
             });
 
+         
         });
 
         $(document).ready(function () {
             
             
             $('#btnLoad').click(function () {
+
+
+
                 var selectedYears = $('.year-checkbox:checked').map(function () {
                     return this.value;
                 }).get();
@@ -116,6 +143,11 @@
             $('#btnClear').click(function () {
                 $('.year-checkbox').prop('checked', false);
                 $('#reportContainer').empty();
+                // This will check the checkbox whose value is 2025
+                $('.year-checkbox[value="2025"]').prop('checked', true);
+                $("#btnLoad").trigger("click");
+
+
             });
 
                 // The renderTable function remains the same as in the previous response
@@ -185,8 +217,21 @@
                 $('#reportContainer').html(table);
             }
         });
-    
+
+     
+   
+        $(document).ready(function ()
+        {
+
+            for (var year = 2000; year <= 2050; year++) {
+                $("#yearDropdown").append(
+
+                    $("<option>", { value: year, text: year })
+                );
+            }
+        });
+  
     </script>
-</body>
+</div>
 
 </asp:Content>

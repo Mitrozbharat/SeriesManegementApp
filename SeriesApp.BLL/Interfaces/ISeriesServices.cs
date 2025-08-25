@@ -9,11 +9,10 @@ namespace SeriesApp.BLL.Interfaces
 {
     public interface ISeriesServices
     {
-        Task<IEnumerable<tbl_Series>> GetAll();
-        Task<tbl_Series> CreateSeriesAsync(tbl_Series series);
+        Task<IEnumerable<tbl_Series>> GetAllSeries();
+        Task<int> CreateSeriesAsync(tbl_Series series);
         Task<bool> UpdateSeriesAsync(tbl_Series series);
-        Task<IEnumerable<tbl_Series>> SearchSeriesAsync(int? seriesId, string seriesType, string seriesName, DateTime? startFrom, DateTime? endTo, string sortBy);
-
+      
         Task<IEnumerable<tbl_Series>> SearchByAsync(int? seriesId, string? seriesType, string? seriesName, DateTime? startFrom, DateTime? endTo, string? sortBy);
 
         Task<bool> DeleteAsync(int id);

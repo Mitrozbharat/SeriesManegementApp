@@ -10,13 +10,14 @@ public class SeriesRepository : ISeriesRepo
 
     public SeriesRepository(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+       this._connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
     public async Task<int> AddSeriesAsync(tbl_Series s)
     {
         using var conn = new SqlConnection(_connectionString);
-        using var cmd = new SqlCommand("dbo.prcTblSeriesInsert", conn) { CommandType = CommandType.StoredProcedure };
+        using var cmd = new SqlCommand("dbo.prcTblSeriesInsert", conn)
+        { CommandType = CommandType.StoredProcedure };
 
         cmd.Parameters.AddWithValue("@SeriesName", s.SeriesName);
         cmd.Parameters.AddWithValue("@SeriesType", s.SeriesType);
@@ -31,8 +32,14 @@ public class SeriesRepository : ISeriesRepo
         cmd.Parameters.AddWithValue("@SeriesEndDate", s.SeriesEndDate);
         cmd.Parameters.AddWithValue("@IsActive", s.IsActive);
         cmd.Parameters.AddWithValue("@Description", (object?)s.Description ?? DBNull.Value);
+        //cmd.Parameters.AddWithValue("@cmdType", "insert");
+        //cmd.Parameters.AddWithValue("@RowsAffected", 0);
 
-        var outId = new SqlParameter("@NewSeriesId", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+        var outId = new SqlParameter("@SeriesId", SqlDbType.Int) 
+        
+        { Direction = ParameterDirection.Output };
+
         cmd.Parameters.Add(outId);
 
         try
@@ -53,10 +60,11 @@ public class SeriesRepository : ISeriesRepo
     public async Task<bool> UpdateSeriesAsync(tbl_Series s)
     {
         using var conn = new SqlConnection(_connectionString);
-        using var cmd = new SqlCommand("dbo.prcTblSeriesUpdate", conn)
+        using var cmd = new SqlCommand("[dbo].[prcTblSeriesUpdate]", conn)
         {
             CommandType = CommandType.StoredProcedure
         };
+
 
         cmd.Parameters.AddWithValue("@SeriesId", s.SeriesId);
         cmd.Parameters.AddWithValue("@SeriesName", s.SeriesName);
@@ -72,7 +80,10 @@ public class SeriesRepository : ISeriesRepo
         cmd.Parameters.AddWithValue("@SeriesEndDate", s.SeriesEndDate);
         cmd.Parameters.AddWithValue("@IsActive", s.IsActive);
         cmd.Parameters.AddWithValue("@Description", (object?)s.Description ?? DBNull.Value);
+        //cmd.Parameters.AddWithValue("@cmdType", "update");
+        //cmd.Parameters.AddWithValue("@RowsAffected", 0);
 
+      
         var rowsAffectedParam = new SqlParameter("@RowsAffected", SqlDbType.Int)
         {
             Direction = ParameterDirection.Output
@@ -90,52 +101,6 @@ public class SeriesRepository : ISeriesRepo
         catch (Exception ex)
         {
             await LogErrorAsync(ex, nameof(UpdateSeriesAsync));
-            throw;
-        }
-    }
-
-    public async Task<IEnumerable<tbl_Series>> SearchSeriesAsync(int? seriesId, string seriesType, string seriesName, DateTime? startFrom, DateTime? endTo, string sortBy)
-    {
-        var list = new List<tbl_Series>();
-        using var conn = new SqlConnection(_connectionString);
-        using var cmd = new SqlCommand("dbo.prcTblSeriesSearch", conn) { CommandType = CommandType.StoredProcedure };
-
-        cmd.Parameters.AddWithValue("@SeriesId", (object?)seriesId ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@SeriesType", (object?)seriesType ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@SeriesName", (object?)seriesName ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@StartFromDate", (object?)startFrom ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@EndToDate", (object?)endTo ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@SortBy", (object?)sortBy ?? DBNull.Value);
-
-        try
-        {
-            await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                list.Add(new tbl_Series
-                {
-                    SeriesId = reader.GetInt32(reader.GetOrdinal("SeriesId")),
-                    SeriesName = reader.GetString(reader.GetOrdinal("SeriesName")),
-                    SeriesType = reader.GetString(reader.GetOrdinal("SeriesType")),
-                    SeriesStatus = reader.GetString(reader.GetOrdinal("SeriesStatus")),
-                    MatchStatus = reader.GetString(reader.GetOrdinal("MatchStatus")),
-                    MatchFormat = reader.IsDBNull(reader.GetOrdinal("MatchFormat")) ? null : reader.GetString(reader.GetOrdinal("MatchFormat")),
-                    SeriesMatchType = reader.IsDBNull(reader.GetOrdinal("SeriesMatchType")) ? null : reader.GetString(reader.GetOrdinal("SeriesMatchType")),
-                    Gender = reader.GetString(reader.GetOrdinal("Gender")),
-                    Year = reader.GetString(reader.GetOrdinal("Year")),
-                    TrophyType = reader.GetString(reader.GetOrdinal("TrophyType")),
-                    SeriesStartDate = reader.GetDateTime(reader.GetOrdinal("SeriesStartDate")),
-                    SeriesEndDate = reader.GetDateTime(reader.GetOrdinal("SeriesEndDate")),
-                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
-                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString(reader.GetOrdinal("Description"))
-                });
-            }
-            return list;
-        }
-        catch (Exception ex)
-        {
-            await LogErrorAsync(ex, nameof(SearchSeriesAsync));
             throw;
         }
     }
@@ -243,7 +208,9 @@ public class SeriesRepository : ISeriesRepo
         {
             var rowsAffected = await cmd.ExecuteNonQueryAsync();
             await transaction.CommitAsync();
-            return rowsAffected > 0;
+            if(rowsAffected > 0) return true ;
+
+            return false;
         }
         catch (Exception ex)
         {
@@ -287,7 +254,7 @@ public class SeriesRepository : ISeriesRepo
             }
             catch (Exception ex)
             {
-                LogError(ex, nameof(GetSeriesReport));
+                LogErrorAsync(ex, nameof(GetSeriesReport));
                 throw;
             }
         }
@@ -313,29 +280,10 @@ public class SeriesRepository : ISeriesRepo
         }
         catch
         {
-            // Swallow logging errors to avoid recursive failures
+            Console.WriteLine("Error");
         }
     }
 
-    private void LogError(Exception ex, string methodName)
-    {
-        try
-        {
-            using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand(
-                "INSERT INTO ErrorLogs (OccurredOn, Message, StackTrace, AdditionalInfo) VALUES (@occurredOn, @message, @stackTrace, @additionalInfo)", conn);
-
-            cmd.Parameters.AddWithValue("@occurredOn", DateTime.UtcNow);
-            cmd.Parameters.AddWithValue("@message", ex.Message);
-            cmd.Parameters.AddWithValue("@stackTrace", ex.StackTrace ?? "");
-            cmd.Parameters.AddWithValue("@additionalInfo", methodName);
-
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-        catch
-        {
-            // Swallow logging errors to avoid recursive failures
-        }
-    }
+   
+   
 }

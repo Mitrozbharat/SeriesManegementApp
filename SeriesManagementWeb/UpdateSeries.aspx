@@ -8,15 +8,23 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <body class="bg-light">
-        <div class="container mt-5">
+        <div class="container">
 
-            <div class="my-3">
-    <a href="ManageSeries" class="btn btn-outline-danger m-1">Back</a>
- </div>
 
             <div class="card shadow-lg p-4 mx-auto" style="max-width: 900px;">
-                <h3 id="pageTitle" class="mb-4 text-center">Add Series</h3>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="ManageSeries" class="btn btn-outline-danger m-1">Back</a>
+                    </div>
+                     <div class="col-md-8">
+                            <h3 id="pageTitle" class="mb-4 text-center">Add Series</h3>
 
+                             </div>
+                </div>
+
+                   
+             
                 <form id="seriesForm">
                     <!-- Row 1 -->
                     <div class="row">
@@ -112,11 +120,14 @@
 
                     <!-- Row 4 -->
                     <div class="row">
+                         <div id="errorMessage" class="error-message"></div>
+
                         <div class="form-group col-md-4">
                             <label class="form-label">Series Start Date</label>
                             <input type="date" class="form-control" id="SeriesStartDate" required />
                         </div>
                         <div class="form-group col-md-4">
+
                             <label class="form-label">Series End Date</label>
                             <input type="date" class="form-control" id="SeriesEndDate" required />
                         </div>
@@ -142,6 +153,7 @@
                         <button type="reset" class="btn btn-secondary">Refresh</button>
                         <button type="button" class="btn btn-danger" onclick="window.location='ManageSeries.aspx'">Cancel</button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -250,10 +262,22 @@
 
 
                 };
+                var startDate = $("#SeriesStartDate").val();
+                var endDate = $("#SeriesEndDate").val();
+
+
+                if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+                    $('#errorMessage').text('Start date cannot be after end date.')
+                      .css({ "color": "red" })
+                      .show();
+                    return;
+                }
+
+                $('#errorMessage').hide();
 
                 $.ajax({
                     url: "https://localhost:7019/api/Series/update/" + id,
-                    type: "POST",
+                    type: "PUT",
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function (res) {
@@ -268,6 +292,12 @@
                 // AJAX POST request
                
             }
+
+
+
+           
+
+
         </script>
     </body>
 </asp:Content>

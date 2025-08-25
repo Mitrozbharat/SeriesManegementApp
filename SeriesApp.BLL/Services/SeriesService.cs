@@ -18,14 +18,22 @@ namespace SeriesApp.BLL.Services
             _repo = repo;
         }
 
-        public async Task<tbl_Series> CreateSeriesAsync(tbl_Series series)
+
+        public Task<IEnumerable<tbl_Series>> GetAllSeries()
+        {
+            return _repo.GetAllSeries();
+        }
+
+        public async Task<int> CreateSeriesAsync(tbl_Series series)
         {
             // basic validation
             if (string.IsNullOrWhiteSpace(series.SeriesName))
                 throw new ArgumentException("SeriesName is required");
+            if (string.IsNullOrWhiteSpace(series.Gender))
+                throw new ArgumentException("Gender is required");
 
             series.SeriesId = await _repo.AddSeriesAsync(series);
-            return series;
+            return series.SeriesId;
         }
 
         public Task<bool> UpdateSeriesAsync(tbl_Series series)
@@ -34,16 +42,7 @@ namespace SeriesApp.BLL.Services
             return _repo.UpdateSeriesAsync(series);
         }
 
-        public Task<IEnumerable<tbl_Series>> SearchSeriesAsync(int? seriesApiId, string seriesType, string seriesName, DateTime? startFrom, DateTime? endTo, string sortBy)
-        {
-            return _repo.SearchSeriesAsync(seriesApiId, seriesType, seriesName, startFrom, endTo, sortBy);
-        }
-
-        public Task<IEnumerable<tbl_Series>> GetAll()
-        {
-            return _repo.GetAllSeries();
-        }
-
+ 
         public Task<IEnumerable<tbl_Series>> SearchByAsync(int? seriesId, string? seriesType, string? seriesName, DateTime? startFrom, DateTime? endTo, string? sortBy)
         {
             return _repo.SearchByAsync(seriesId, seriesType, seriesName, startFrom, endTo, sortBy);

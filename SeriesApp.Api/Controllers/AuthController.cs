@@ -28,7 +28,8 @@ namespace SeriesApp.Api.Controllers
             bool isValid = await loginService.Login(user);
 
             if (!isValid)
-                return NotFound("Invalid username or password");
+              
+              return NotFound("Invalid username or password");
 
             return Ok("Login Success");
         }
