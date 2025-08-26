@@ -15,6 +15,7 @@ namespace SeriesApp.DAL
 
         public DbSet<tbl_Series> tbl_Series { get; set; }
         public DbSet<ErrorLog> ErrorLogs { get; set; } // optional logging table
+        public DbSet<Users> Users { get; set; }
 
         
     }

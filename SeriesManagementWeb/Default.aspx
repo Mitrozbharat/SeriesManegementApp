@@ -62,6 +62,9 @@
         <button type="button" id="btnsubmit" class="btn btn-primary w-100 mt-2">Sign In</button>
 
           <p class="error" id="error-id"> Please check the username or password ?</p>
+
+           <p class="mt-4 mt-lg-3"><a href="Register.aspx" class="text-primary mt-4">Are you Registed ? Register </a></p>
+
       </div>
 
    
@@ -111,7 +114,7 @@
                 if (xhr.status === 200) {
                     //alert(response.message || "Login successful!");
                  
-                    window.location.href = "/ManageSeries";
+                    window.location.href = "ManageSeries.aspx";
                 }
             },
             error: function (xhr, textStatus, errorThrown) {

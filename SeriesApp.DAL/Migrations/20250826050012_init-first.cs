@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SeriesApp.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class inti : Migration
+    public partial class initfirst : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,7 +28,7 @@ namespace SeriesApp.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Series",
+                name: "tbl_Series",
                 columns: table => new
                 {
                     SeriesId = table.Column<int>(type: "int", nullable: false)
@@ -49,7 +49,23 @@ namespace SeriesApp.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Series", x => x.SeriesId);
+                    table.PrimaryKey("PK_tbl_Series", x => x.SeriesId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
         }
 
@@ -60,7 +76,10 @@ namespace SeriesApp.DAL.Migrations
                 name: "ErrorLogs");
 
             migrationBuilder.DropTable(
-                name: "Series");
+                name: "tbl_Series");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

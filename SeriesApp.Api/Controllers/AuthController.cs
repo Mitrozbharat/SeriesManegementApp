@@ -4,6 +4,8 @@ using SeriesApp.BLL.Interfaces;
 using SeriesApp.BLL.Services;
 using SeriesApp.Domain.DTOs;
 using SeriesApp.Domain.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace SeriesApp.Api.Controllers
 {
@@ -11,21 +13,21 @@ namespace SeriesApp.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly ILoginService loginService;
-        public AuthController(ILoginService loginService)
+        private readonly IAuthService _authService;
+        public AuthController( IAuthService authService)
         {
 
-            this.loginService = loginService;
+            this._authService = authService;        
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]UserDto user)
         {
             if (user == null)
                 return BadRequest("User data is required");
 
 
-            bool isValid = await loginService.Login(user);
+            bool isValid = await _authService.Login(user);
 
             if (!isValid)
               
@@ -33,6 +35,30 @@ namespace SeriesApp.Api.Controllers
 
             return Ok("Login Success");
         }
+
+     
+        [HttpPost("register")]
+        public async Task<IActionResult> register(RegisterDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+             bool isValid = await _authService.Register(dto);
+
+            if (!isValid)
+
+                return BadRequest("Registration Failed");
+
+            return Ok("Registration Success");
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+           
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

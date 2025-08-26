@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeriesApp.BLL.Interfaces
+namespace SeriesApp.DAL.Interfaces
 {
-    public interface ILoginService
+    public interface IAuthRepo
     {
- 
-        Task<bool> Login(UserDto user);
+       Task<bool> Login(Users user);
+       Task<bool> Register(Users dto);
     }
 }

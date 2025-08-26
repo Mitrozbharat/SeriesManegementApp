@@ -12,8 +12,8 @@ using SeriesApp.DAL;
 namespace SeriesApp.DAL.Migrations
 {
     [DbContext(typeof(SeriesDbContext))]
-    [Migration("20250820092050_init")]
-    partial class init
+    [Migration("20250826050012_init-first")]
+    partial class initfirst
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,35 @@ namespace SeriesApp.DAL.Migrations
                     b.HasKey("ErrorLogId");
 
                     b.ToTable("ErrorLogs");
+                });
+
+            modelBuilder.Entity("SeriesApp.Domain.Entities.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SeriesApp.Domain.Entities.tbl_Series", b =>
