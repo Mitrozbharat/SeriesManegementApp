@@ -133,7 +133,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Is Active</label>
-                            <select class="form-select" id="IsActive" required>
+                            <select disabled class="form-select" id="IsActive" required>
                                 <option value="">-- Select --</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>

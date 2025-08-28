@@ -7,7 +7,6 @@ using System.Data;
 public class SeriesRepository : ISeriesRepo
 {
     private readonly string _connectionString;
-
     public SeriesRepository(IConfiguration configuration)
     {
        this._connectionString = configuration.GetConnectionString("DefaultConnection");

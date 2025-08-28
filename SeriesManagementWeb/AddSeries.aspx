@@ -155,6 +155,18 @@
                     description: $("#Description").val()
                 };
 
+                var startDate = $("#SeriesStartDate").val();
+                var endDate = $("#SeriesEndDate").val();
+
+
+                if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+                    $('#errorMessage').text('Start date cannot be after end date.')
+                        .css({ "color": "red" })
+                        .show();
+                    return;
+                }
+
+                $('#errorMessage').hide();
                 // AJAX POST request
                 $.ajax({
                     url: "https://localhost:7019/api/Series/Create",

@@ -92,7 +92,7 @@
                             <asp:DropDownList ID="ddlSortBy" runat="server" CssClass="form-control">
                                 <asp:ListItem Value="">--select--</asp:ListItem>
                                 <asp:ListItem Value="SeriesStartDate ASC">Start Date Asc</asp:ListItem>
-                                <asp:ListItem Value="SeriesStartDate DESC" Selected="True">Start Date Desc</asp:ListItem>
+                                <asp:ListItem Value="SeriesStartDate DESC" >Start Date Desc</asp:ListItem>
                                 
                             </asp:DropDownList>
                         </div>

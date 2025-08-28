@@ -57,8 +57,8 @@
             <label><input type="checkbox" class="year-checkbox" value="2021"> 2021</label>
             <label><input type="checkbox" class="year-checkbox" value="2022"> 2022</label>
             <label><input type="checkbox" class="year-checkbox" value="2023"> 2023</label>
-            <label><input type="checkbox" class="year-checkbox" value="2024"> 2024</label>
-            <label><input type="checkbox" class="year-checkbox" checked value="2025" /> 2025 </label>
+            <label><input type="checkbox" class="year-checkbox" checked value="2024"> 2024</label>
+            <label><input type="checkbox" class="year-checkbox"  value="2025" /> 2025 </label>
      </div>
 
     <button type="button" id="btnLoad" style="display:none">Load Report</button>
