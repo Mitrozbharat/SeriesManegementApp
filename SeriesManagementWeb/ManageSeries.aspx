@@ -90,10 +90,10 @@
                         <div class="form-group col-md-4">
                             <label for="ddlSortBy">Sort By</label>
                             <asp:DropDownList ID="ddlSortBy" runat="server" CssClass="form-control">
+                                <asp:ListItem Value="">--select--</asp:ListItem>
                                 <asp:ListItem Value="SeriesStartDate ASC">Start Date Asc</asp:ListItem>
                                 <asp:ListItem Value="SeriesStartDate DESC" Selected="True">Start Date Desc</asp:ListItem>
-                                <asp:ListItem Value="SeriesEndDateAsc">End Date Asc</asp:ListItem>
-                                <asp:ListItem Value="SeriesEndDateDesc">End Date Desc</asp:ListItem>
+                                
                             </asp:DropDownList>
                         </div>
 
@@ -113,6 +113,7 @@
                 </div>
                 <div id="errorMessage" class="error-message"></div>
             </div>
+     </form>
 
             <!-- Series Table -->
             <div class="table-container">
@@ -135,9 +136,8 @@
                 </table>
 
             </div>
-        </div>
-    </form>
-
+       
+    
 
     <!-- Modal -->
     <!-- Series Modal -->
@@ -330,7 +330,7 @@
                 $('#MainContent_ddlSeriesType').val('');
                 $('#MainContent_txtSeriesStartDate').val('');
                 $('#MainContent_txtSeriesEndDate').val('');
-                $('#MainContent_ddlSortBy').val('SeriesStartDate DESC');
+                $('#MainContent_ddlSortBy').val('');
 
                 $('#errorMessage').hide();
                 table.ajax.reload();
@@ -372,7 +372,7 @@
                         d.seriesType = $('#MainContent_ddlSeriesType').val() || null;
                         d.startFrom = $('#MainContent_txtSeriesStartDate').val() || null;
                         d.endTo = $('#MainContent_txtSeriesEndDate').val() || null;
-                        d.sortBy = $('#MainContent_ddlSortBy').val() || 'SeriesStartDate DESC';
+                        d.sortBy = $('#MainContent_ddlSortBy').val() || null;
 
                         // 🔹 Print params before sending to server
                         console.log("Params sent to server:", d);

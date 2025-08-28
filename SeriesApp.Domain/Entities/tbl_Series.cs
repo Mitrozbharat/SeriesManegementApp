@@ -43,7 +43,7 @@ namespace SeriesApp.Domain.Entities
             public DateTime SeriesStartDate { get; set; }
             public DateTime SeriesEndDate { get; set; }
 
-            public bool IsActive { get; set; }               // true => Yes, false => No
+            public bool IsActive { get; set; } = true;              // true => Yes, false => No
 
             [MaxLength(500)]
             public string Description { get; set; }

@@ -56,7 +56,7 @@ namespace SeriesApp.API.Controllers
 
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] int? seriesId, [FromQuery] string? seriesType, [FromQuery] string? seriesName,
-                                             [FromQuery] DateTime? startFrom, [FromQuery] DateTime? endTo, [FromQuery] string sortBy = "StartDesc")
+                                             [FromQuery] DateTime? startFrom, [FromQuery] DateTime? endTo, [FromQuery] string? sortBy )
         {
             var list = await _service.SearchByAsync(seriesId, seriesType, seriesName, startFrom, endTo, sortBy);
 
